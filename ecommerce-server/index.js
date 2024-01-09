@@ -31,22 +31,40 @@ app.get('/', async (req, res) => {
   }
 });
 
-
+// if username is already in the db then throw username already exxist
+// try to implement password hashing (crypto.js)
 app.post('/register', async (req, res) => {
   try {
-    const { username, address, email, phoneNumber, password, confirmPassword } = req.body;
-    
-    // Example query using the connection pool
-    const [results] = await mysqlConnection.execute('INSERT INTO user (username, email, address, phoneNumber, password, confirmPassword) VALUES (?, ?, ?, ?, ?, ?)'
-    [username, address, email, parseInt(phoneNumber), parseInt(password), parseInt(confirmPassword)]
-    );
-    console.log("results", results)
-    res.json(results);
+    const sql = 'INSERT INTO user (username, email, address, phoneNumber, password) VALUES (?, ?, ?, ?, ?)';
+    const values = [req.body.username, req.body.address, req.body.email, req.body.phoneNumber, req.body.password];
+    console.log(values)
+    const results = await mysqlConnection.execute(sql, values);
+    console.log(results[0])
+    res.json({ status: "ok", results: results[0]?.insertId });
+
   } catch (error) {
     console.error('Error executing query:', error);
     res.status(500).send('Internal Server Error');
   }
 
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const addvalues = 'select * from user where username = ? and password = ?;'
+    const results = await mysqlConnection.execute(addvalues, [req.body.username, req.body.password]);
+    console.log(results[0])
+    if (results?.[0]?.length > 0) {
+      const newResult = [...results[0]]
+      delete newResult?.[0]?.password;
+      res.json({ status: "success", results: newResult });
+    } else {
+      res.status(404).json({ error: 'no data found' });
+    }
+  } catch (error) {
+    res.status(500).send('Internal server error')
+
+  }
 });
 
 

@@ -1,46 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Space } from 'antd';
-
-// const SubmitButton = ({ form }) => {
-//   const [submittable, setSubmittable] = React.useState(false);
-
-//   // Watch all names
-//   const values = Form.useWatch([], form);
-//   React.useEffect(() => {
-//     form
-//       .validateFields({
-//         validateOnly: true,
-//       })
-//       .then(
-//         () => {
-//           setSubmittable(true);
-//         },
-//         () => {
-//           setSubmittable(false);
-//         },
-//       );
-//   }, [values]);
-// };
-
-
+import { message } from 'antd';
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-
-  })
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  // console.log("bshjkgfshjkdgfskjdgs", formData)
 
   const handleSubmit = async (e) => {
-    debugger
     e.preventDefault(); // Prevent the default form submission behavior
     try {
       const formData = new FormData(e.target);
@@ -49,9 +12,6 @@ const Register = () => {
       formData.forEach((value, key) => {
         formDataObject[key] = value;
       });
-
-      // Now formDataObject contains the form data
-      console.log(formDataObject);
 
       const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
@@ -62,17 +22,15 @@ const Register = () => {
       });
 
       if (response.ok) {
-        console.log('User registered successfully!');
+        message.success('User registered successfully!');
       } else {
-        console.error('Error registering user');
+        message.error('Error registering user');
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-
-  const [form] = Form.useForm();
   return (
     <div className='topnav mt-14 pt-8 flex justify-center'>
       <form onSubmit={handleSubmit} className='p-5'>
@@ -105,4 +63,5 @@ const Register = () => {
     </div>
   );
 };
+
 export default Register;
