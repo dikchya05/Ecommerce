@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
@@ -13,6 +15,11 @@ const Register = () => {
         formDataObject[key] = value;
       });
 
+      if (formDataObject.password !== formDataObject.confirmPassword) {
+        message.error('Passwords do not match');
+        return;
+      }
+
       const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
         headers: {
@@ -20,9 +27,13 @@ const Register = () => {
         },
         body: JSON.stringify(formDataObject),
       });
-
-      if (response.ok) {
+      debugger
+      
+      if (response.status === 400) {
+        message.error('username already exist')
+      } else if (response.status === 200) {
         message.success('User registered successfully!');
+        navigate('/login');
       } else {
         message.error('Error registering user');
       }
