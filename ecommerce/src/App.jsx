@@ -4,7 +4,8 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Layout from './Layout'
 import Register from './pages/register'
-import ListOfItem from './pages/list'
+import AddItem from './pages/additem'
+import ListOfItem from './pages/additem'
 
 function App() {
 
@@ -17,7 +18,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path= "/register" element= {<Register/>}/>
-              <Route path = "/listOfItem" element={<ListOfItem/>}/>
+              <Route path = "/additem" element={<AddItem/>}/>
+              <Route path = "/listofitem" element = {<ListOfItem/>}/>
             </Routes>
           </Layout>
         </BrowserRouter>

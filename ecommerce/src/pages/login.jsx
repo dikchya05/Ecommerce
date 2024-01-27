@@ -1,10 +1,15 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
-
+import { useDispatch } from 'react-redux'
+import { setUserDetails } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  
+  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+
   const onFinish = async (values) => {
-    console.log('Success:', values);
     try {
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
@@ -13,8 +18,11 @@ const Login = () => {
         },
         body: JSON.stringify(values),
       });
+
       if (response.ok) {
         message.success('login successfull!');
+        navigate('/additem')
+        // dispatch(setUserDetails(response?.data))
       } else {
         message.error('login unsuccessful')
       }

@@ -6,8 +6,8 @@ const server = http.createServer(app);
 
 const bcrypt = require('bcrypt');
 
-
-
+const jwt = require("jsonwebtoken");
+const secretKey = "secretKey";
 
 require('dotenv').config()
 const port = process.env.PORT
@@ -50,18 +50,22 @@ app.post('/register', async (req, res) => {
     const results = await mysqlConnection.execute('INSERT INTO user (username, email, address, phoneNumber, password) VALUES (?, ?, ?, ?, ?);',
       [req.body.username, req.body.address, req.body.email, req.body.phoneNumber, hashedPassword]);
 
-    res.json({ status: "ok", results: results[0]?.insertId });
+    return res.json({ status: "ok", results: results[0]?.insertId });
 
   } catch (error) {
     console.error('Error executing query:', error);
-    res.status(500).send('Internal Server Error');
+    return res.status(500).send('Internal Server Error');
   }
 });
 
 app.post('/login', async (req, res) => {
   try {
-    const [users] = await mysqlConnection.query('SELECT * FROM user WHERE username = ?', [req.body.username]);
 
+    const [users] = await mysqlConnection.query('SELECT * FROM user WHERE username = ?', [req.body.username]);
+    // jwt.sign({ users }, secretKey, { expiresIn: '300s' }, (err, token) =>{
+    //   token;
+    // });
+    var token = jwt.sign({ username: req.body.username }, process.env.SECRET_KEY);
     if (users.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -72,30 +76,39 @@ app.post('/login', async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
-
-    // If you reach this point, the login is successful
-    // You can now proceed with your authentication logic
-
-    // Optionally, you can remove the password from the response
     const userWithoutPassword = { ...users[0] };
     delete userWithoutPassword.password;
 
-    res.json({ status: 'success', user: userWithoutPassword });
+    return res.json({ status: 'success', token, user: userWithoutPassword });
 
   } catch (error) {
-    res.status(500).send('Internal server error')
+    return res.status(500).send('Internal server error')
+
+  }
+});
+app.post('/additem', async (req, res) =>{
+try{
+  const item = await mysqlConnection.query('Insert into additem (category_name, price, description) VALUES (?, ?, ?);', [req.body.category_name, req.body.price, req.body.description])
+ 
+  res.json(item)
+}catch (error){
+  console.error('Error executing query:', error);
+  return res.status(500).send('Internal Server Error');
+}
+});
+
+app.get('/listofitem', async (req, res) => {
+  try{
+    const item = await mysqlConnection.query('Select * from additem ', [req.body.category_name, req.body.price, req.body.description])
+    res.json(item)
+
+  }catch(err){
+    console.error('Error executing query:', err);
+    return res.status(500).send ('Internal Server Error')
 
   }
 });
 
-
-
-// const registerRouter = require('./routes/registerRouter');
-// const loginRouter = require('./routes/loginRouter');
-
-
-// app.use(registerRouter)
-// app.use(loginRouter)
 
 
 server.listen(port, () => {

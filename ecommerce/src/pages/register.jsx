@@ -27,8 +27,7 @@ const Register = () => {
         },
         body: JSON.stringify(formDataObject),
       });
-      debugger
-      
+  
       if (response.status === 400) {
         message.error('username already exist')
       } else if (response.status === 200) {
@@ -46,30 +45,30 @@ const Register = () => {
     <div className='topnav mt-14 pt-8 flex justify-center'>
       <form onSubmit={handleSubmit} className='p-5'>
         <div className='flex flex-col text-left py-2'>
-          <label className='text-sm font-bold'>username</label>
-          <input name="username" className='border-[1px] px-2 py-1' type='text' required placeholder='enter user name' />
+          <label className='text-sm  font-bold'>Username</label>
+          <input name="username" className='border-[1px] px-2 py-1 my-1' type='text' required placeholder='Enter Username' />
+        </div>
+        <div className='flex flex-col text-left py-2 my-3'>
+          <label className='text-sm font-bold'>Address</label>
+          <input name="address" className='border-[1px] px-2 py-1 my-1' type='text' required placeholder='Enter Address' />
         </div>
         <div className='flex flex-col text-left py-2'>
-          <label className='text-sm font-bold'>address</label>
-          <input name="address" className='border-[1px] px-2 py-1' type='text' required placeholder='enter user name' />
+          <label className='text-sm font-bold'>Email</label>
+          <input name="email" className='border-[1px] px-2 py-1 my-1' type='email' required placeholder='Enter Email' />
         </div>
         <div className='flex flex-col text-left py-2'>
-          <label className='text-sm font-bold'>email</label>
-          <input name="email" className='border-[1px] px-2 py-1' type='email' required placeholder='enter user name' />
+          <label className='text-sm font-bold'>PhoneNumber</label>
+          <input name="phoneNumber" className='border-[1px] px-2 py-1 my-1' type='phone' required placeholder='Enter PhoneNumber' />
         </div>
         <div className='flex flex-col text-left py-2'>
-          <label className='text-sm font-bold'>phoneNumber</label>
-          <input name="phoneNumber" className='border-[1px] px-2 py-1' type='phone' required placeholder='enter user name' />
+          <label className='text-sm font-bold'>Password</label>
+          <input name="password" className='border-[1px] px-2 py-1 my-1' type='password' required placeholder='Enter Password' />
         </div>
         <div className='flex flex-col text-left py-2'>
-          <label className='text-sm font-bold'>password</label>
-          <input name="password" className='border-[1px] px-2 py-1' type='password' required placeholder='enter user name' />
+          <label className='text-sm font-bold'>Confirm Password</label>
+          <input name="confirmPassword" className='border-[1px] px-2 py-1 my-1' type='password' required placeholder='Enter Confirm Password' />
         </div>
-        <div className='flex flex-col text-left py-2'>
-          <label className='text-sm font-bold'>confirmPassword</label>
-          <input name="confirmPassword" className='border-[1px] px-2 py-1' type='password' required placeholder='enter user name' />
-        </div>
-        <button className='py-2 px-4 bg-black text-white hover:bg-green-500 rounded-md text-center'>submit</button>
+        <button className='py-2 px-4 bg-black text-white hover:bg-green-500 rounded-md text-center'>Submit</button>
       </form>
     </div>
   );
