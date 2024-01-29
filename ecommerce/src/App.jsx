@@ -5,7 +5,7 @@ import Login from './pages/login'
 import Layout from './Layout'
 import Register from './pages/register'
 import AddItem from './pages/additem'
-import ListOfItem from './pages/additem'
+import ListOfItem from './pages/listofitem'
 
 function App() {
 

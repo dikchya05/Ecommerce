@@ -11,3 +11,78 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
+
+.form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-image: url('../media/ecom.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+  }
+  .form form{
+      width:500px;
+      height: 100%;
+      margin: 0 auto;
+      background-color: aliceblue;
+      padding: 40px 0;
+  }
+  .form form h1{
+    padding: 12px 0 36px 0;
+    font-weight: bolder;
+  }
+  .form form input{
+      width: 308px;
+      height: 35px;
+      border: 2px solid rgb(18, 19, 18);
+      border-radius: 8px;
+      padding-left: 10px;
+      display: block;
+      margin: 0 auto 11px auto;
+  }
+  .form form select{
+    width: 308px;
+    height: 35px;
+    border: 2px solid rgb(18, 19, 18);
+    border-radius: 8px;
+    padding-left: 10px;
+    display: block;
+    margin: 0 auto 11px auto;
+}
+  .form form button{
+    margin-top: 25px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .form .error {
+    color: rgb(14, 13, 13);
+    margin: -8px 0px 9px 0px;
+    font-size: 12px;
+  }
+  /*login button */
+  .form button{
+  margin: 10px;
+  background-color: #044caa;
+  color: white;
+  padding: 10px 10px;
+  margin: 6px 0 0  152px;
+  width: 30%;
+  opacity: 0.9;
+  text-align: center;
+  padding-left: 10px;
+  }
+button:hover {
+  opacity:1;
+}

@@ -14,6 +14,7 @@ const Navbar = () => {
                     <a className="text-black  hover:text-green-500 " href="/login">Login</a>
                     <a className="text-black  hover:text-green-500" href="/register">Register</a>
                     <a className="text-black  hover:text-green-500" href="/additem">Item</a>
+                    <a className="text-black  hover:text-green-500" href="/additem">ItemList</a>
                 </div>
             </div>
         </nav>

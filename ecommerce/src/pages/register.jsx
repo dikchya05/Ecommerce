@@ -27,11 +27,13 @@ const Register = () => {
         },
         body: JSON.stringify(formDataObject),
       });
+      debugger
   
       if (response.status === 400) {
         message.error('username already exist')
       } else if (response.status === 200) {
         message.success('User registered successfully!');
+        console.log(response)
         navigate('/login');
       } else {
         message.error('Error registering user');
